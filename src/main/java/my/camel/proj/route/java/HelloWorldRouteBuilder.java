@@ -4,6 +4,7 @@ import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.builder.xml.Namespaces;
 import org.apache.camel.language.Constant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,13 @@ public class HelloWorldRouteBuilder extends RouteBuilder {
 				"direct:greetClientRoute");
 		//from("direct:agr").aggregate(header("myId"), new SimpleAggregator()).completionSize(2).log(LoggingLevel.DEBUG, "Processing ${id}");
 		
+	/*	  <ns2:getDateResponse xmlns:ns2="http://service.cxf.javax/">
+	         <return>2016-03-30T13:38:16.121-04:00</return>
+	      </ns2:getDateResponse>*/
+		
+		Namespaces ns = new Namespaces("ns2","http://service.cxf.javax/");
+		
+		
 		from("direct:calRoute")
 				.setHeader("operationNamespace",
 						constant("http://service.cxf.javax/"))
@@ -47,13 +55,18 @@ public class HelloWorldRouteBuilder extends RouteBuilder {
 							}
 							
 						})
-				.to("cxf:bean:calClient");
-		from("direct:greetClientRoute")
+				.to("cxf:bean:calClient").to("xslt:stylesheets/gdate.xslt");
+		
+		
+		
+		from("direct:greetClientRoute").to("cxf:bean:greetClient").to("xslt:stylesheets/greet.xslt");
+		
+		
 		/*.setHeader("operationNamespace",
 				simple("${type:org.apache.camel.component.cxf.common.message.CxfConstants.DISPATCH_NAMESPACE}"))
 		.setHeader("operationName",
 				simple("${type:org.apache.camel.component.cxf.common.message.CxfConstants.DISPATCH_DEFAULT_OPERATION_NAMESPACE}")).to("log:foo?showHeaders=true")
-		*/.to("cxf:bean:greetClient");
+		*/
 	}
 
 }
