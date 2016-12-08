@@ -1,15 +1,10 @@
 package my.camel.proj.route.java;
 
-import org.apache.camel.Exchange;
-import org.apache.camel.LoggingLevel;
-import org.apache.camel.Processor;
+import my.camel.proj.processors.SimpleAggregator;
+
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.builder.xml.Namespaces;
-import org.apache.camel.language.Constant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import my.camel.proj.processors.SimpleAggregator;
 
 public class HelloWorldRouteBuilder extends RouteBuilder {
 
@@ -31,7 +26,7 @@ public class HelloWorldRouteBuilder extends RouteBuilder {
 		 * 
 		 * });
 		 */
-		from("direct://greetRoute").multicast(new SimpleAggregator()).parallelProcessing().to("direct:calRoute",
+		from("direct://greetRoute").multicast(new SimpleAggregator()).parallelProcessing().to("direct:greetClientRoute",
 				"direct:greetClientRoute");
 		//from("direct:agr").aggregate(header("myId"), new SimpleAggregator()).completionSize(2).log(LoggingLevel.DEBUG, "Processing ${id}");
 		
@@ -39,7 +34,7 @@ public class HelloWorldRouteBuilder extends RouteBuilder {
 	         <return>2016-03-30T13:38:16.121-04:00</return>
 	      </ns2:getDateResponse>*/
 		
-		Namespaces ns = new Namespaces("ns2","http://service.cxf.javax/");
+		/*Namespaces ns = new Namespaces("ns2","http://service.cxf.javax/");
 		
 		
 		from("direct:calRoute")
@@ -55,11 +50,11 @@ public class HelloWorldRouteBuilder extends RouteBuilder {
 							}
 							
 						})
-				.to("cxf:bean:calClient").to("xslt:stylesheets/gdate.xslt");
+				.to("cxf:bean:calClient").to("xslt:stylesheets/gdate.xslt");*/
 		
+		from("direct:greetClientRoute").to("xslt:stylesheets/greet.xslt");
 		
-		
-		from("direct:greetClientRoute").to("cxf:bean:greetClient").to("xslt:stylesheets/greet.xslt");
+		//from("direct:greetClientRoute").to("cxf:bean:greetClient").to("xslt:stylesheets/greet.xslt");
 		
 		
 		/*.setHeader("operationNamespace",

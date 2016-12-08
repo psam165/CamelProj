@@ -29,13 +29,13 @@
 
 	<bean id="greetRoute" class="my.camel.proj.route.java.HelloWorldRouteBuilder" />
 
-	<cxf:cxfEndpoint id="greetClient" wsdlURL="http://localhost:8080/Cxf-Jaxws/Greet?wsdl"
+	<!-- <cxf:cxfEndpoint id="greetClient" wsdlURL="http://localhost:8080/Cxf-Jaxws/Greet?wsdl"
 		serviceName="tns:GreetingServiceService" endpointName="tns:GreetingServicePort"
 		xmlns:tns="http://service.cxf.javax/" address="http://localhost:8080/Cxf-Jaxws/Greet">
 		<cxf:properties>
-			<!-- we need below dateFormat for avoiding org.apache.camel.RuntimeCamelException: 
+			we need below dateFormat for avoiding org.apache.camel.RuntimeCamelException: 
 				java.lang.IllegalArgumentException: serviceClass must be specified and not 
-				empty -->
+				empty
 			<entry key="dataFormat" value="PAYLOAD" />
 			<entry key="allowStreaming" value="false" />
 		</cxf:properties>
@@ -45,12 +45,12 @@
 		serviceName="tns:TimeWebServiceService" endpointName="tns:TimeWebServicePort"
 		xmlns:tns="http://service.cxf.javax/" address="http://localhost:8080/Cxf-Jaxws/timer">
 		<cxf:properties>
-			<!-- we need below dateFormat for avoiding org.apache.camel.RuntimeCamelException: 
+			we need below dateFormat for avoiding org.apache.camel.RuntimeCamelException: 
 				java.lang.IllegalArgumentException: serviceClass must be specified and not 
-				empty -->
+				empty
 			<entry key="dataFormat" value="PAYLOAD" />
 		</cxf:properties>
-	</cxf:cxfEndpoint>
+	</cxf:cxfEndpoint> -->
 
 
 	<camel-spring:camelContext id="camelSpringContext"

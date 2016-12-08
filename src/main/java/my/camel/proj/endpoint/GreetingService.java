@@ -11,16 +11,16 @@ import org.slf4j.LoggerFactory;
 
 
 
-@WebService
-@BindingType(value=javax.xml.ws.soap.SOAPBinding.SOAP12HTTP_BINDING)
+//@WebService
+//@BindingType(value=javax.xml.ws.soap.SOAPBinding.SOAP12HTTP_BINDING)
 
 //@HandlerChain(file="/WEB-INF/jaxws-handler.xml")
 public class GreetingService {
 	
 private static Logger log4j = LoggerFactory.getLogger(GreetingService.class);
 	
-	@WebMethod
-	@SOAPBinding
+	//@WebMethod
+	//@SOAPBinding
 	public String greet(){
 		log4j.info("Just checking......log4j");
 		return "Hello World";
